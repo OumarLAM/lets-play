@@ -57,6 +57,18 @@ A robust REST API built with Spring Boot and MongoDB that implements user authen
 3. Run using `./mvnw spring-boot:run`
 4. Access API at `http://localhost:8080/api`
 
+## 🐳 Docker Deployment
+
+### Prerequisites
+- Docker
+- Docker Compose
+
+### Running with Docker
+1. Clone the repository with the above provided command
+2. Run `docker-compose up --build`
+3. Access the application at `http://localhost:8080`
+4. Run `docker-compose down` to stop the containers
+
 ## 📝 Prerequisites
 - Java 17 or higher
 - MongoDB
