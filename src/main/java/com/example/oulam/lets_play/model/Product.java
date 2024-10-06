@@ -28,7 +28,7 @@ public class Product {
 
     @NotNull(message = "Price is required")
     @Min(value = 0, message = "Price must be greater than or equal to 0")
-    @DecimalMin(value = "0.0", inclusive = true)
+    @DecimalMin(value = "0.0")
     @Digits(integer = 10, fraction = 2)
     private BigDecimal price;
 
