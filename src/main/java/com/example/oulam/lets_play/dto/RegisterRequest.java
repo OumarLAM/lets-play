@@ -1,4 +1,4 @@
-package com.example.oulam.lets_play.controller;
+package com.example.oulam.lets_play.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,4 +14,5 @@ public class RegisterRequest {
     private String name;
     private String email;
     private String password;
+    private String role;
 }

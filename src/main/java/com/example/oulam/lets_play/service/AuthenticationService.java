@@ -1,6 +1,8 @@
-package com.example.oulam.lets_play.controller;
+package com.example.oulam.lets_play.service;
 
-import com.example.oulam.lets_play.config.JwtService;
+import com.example.oulam.lets_play.controller.AuthenticationResponse;
+import com.example.oulam.lets_play.dto.LoginRequest;
+import com.example.oulam.lets_play.dto.RegisterRequest;
 import com.example.oulam.lets_play.model.User;
 import com.example.oulam.lets_play.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +24,15 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        if (repository.findByEmail(request.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email already registered");
+        }
+
         var user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                //.role(Role.USER)
+                .role(request.getRole())
                 .build();
 
         repository.save(user);
@@ -34,7 +41,7 @@ public class AuthenticationService {
         UserDetails userDetails = userBuilder
                 .username(user.getEmail())
                 .password(user.getPassword())
-                .authorities("ROLE_USER") // Add user authorities here
+                .authorities("ROLE_" + user.getRole().toUpperCase())
                 .build();
 
         var jwtToken = jwtService.createToken(userDetails);
@@ -51,13 +58,13 @@ public class AuthenticationService {
                 )
         );
         var user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         UserBuilder userBuilder = org.springframework.security.core.userdetails.User.builder();
         UserDetails userDetails = userBuilder
                 .username(user.getEmail())
                 .password(user.getPassword())
-                .authorities("ROLE_USER")
+                .authorities("ROLE_" + user.getRole().toUpperCase())
                 .build();
 
         var jwtToken = jwtService.createToken(userDetails);

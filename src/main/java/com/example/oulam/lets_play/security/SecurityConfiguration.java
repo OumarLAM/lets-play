@@ -1,4 +1,4 @@
-package com.example.oulam.lets_play.config;
+package com.example.oulam.lets_play.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -1,5 +1,8 @@
 package com.example.oulam.lets_play.controller;
 
+import com.example.oulam.lets_play.dto.LoginRequest;
+import com.example.oulam.lets_play.dto.RegisterRequest;
+import com.example.oulam.lets_play.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

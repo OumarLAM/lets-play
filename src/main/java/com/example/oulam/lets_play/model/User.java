@@ -36,7 +36,8 @@ public class User {
     @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
 
-    public enum Role {
-        USER, ADMIN
-    }
+    @NotBlank(message = "Role is required")
+    private String role;
+
+    // TO TEST: Should not create a user without the role field
 }
