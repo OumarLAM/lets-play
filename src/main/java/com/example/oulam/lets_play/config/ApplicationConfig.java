@@ -1,5 +1,6 @@
 package com.example.oulam.lets_play.config;
 
+import com.example.oulam.lets_play.model.User;
 import com.example.oulam.lets_play.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,7 +24,16 @@ public class ApplicationConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> repository.findByEmail(username)
+                .map(this::toUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    private UserDetails toUserDetails(User user) {
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getEmail())
+                .password(user.getPassword())
+                //.authorities(user.getRole().name())
+                .build();
     }
 
     @Bean
