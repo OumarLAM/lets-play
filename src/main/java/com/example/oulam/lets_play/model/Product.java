@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.math.BigDecimal;
 
@@ -19,6 +20,7 @@ public class Product {
     @Id
     private String id;
 
+    @Field("product_name")
     @NotBlank(message = "Name is required")
     @Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters")
     private String name;

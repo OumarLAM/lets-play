@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @Builder
@@ -36,6 +37,7 @@ public class User {
     @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
 
+    @Field("user_role")
     @NotBlank(message = "Role is required")
     private String role;
 }
