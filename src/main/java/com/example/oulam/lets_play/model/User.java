@@ -38,6 +38,4 @@ public class User {
 
     @NotBlank(message = "Role is required")
     private String role;
-
-    // TO TEST: Should not create a user without the role field
 }
