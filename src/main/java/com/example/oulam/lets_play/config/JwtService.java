@@ -1,4 +1,4 @@
-package com.example.oulam.lets_play.service;
+package com.example.oulam.lets_play.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

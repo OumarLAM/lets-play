@@ -1,6 +1,6 @@
 package com.example.oulam.lets_play.security;
 
-import com.example.oulam.lets_play.service.JwtService;
+import com.example.oulam.lets_play.config.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

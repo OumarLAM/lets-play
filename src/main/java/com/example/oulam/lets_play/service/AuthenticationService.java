@@ -1,8 +1,9 @@
 package com.example.oulam.lets_play.service;
 
-import com.example.oulam.lets_play.controller.AuthenticationResponse;
-import com.example.oulam.lets_play.dto.LoginRequest;
-import com.example.oulam.lets_play.dto.RegisterRequest;
+import com.example.oulam.lets_play.config.JwtService;
+import com.example.oulam.lets_play.dto.response.AuthenticationResponse;
+import com.example.oulam.lets_play.dto.request.LoginRequest;
+import com.example.oulam.lets_play.dto.request.RegisterRequest;
 import com.example.oulam.lets_play.model.User;
 import com.example.oulam.lets_play.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

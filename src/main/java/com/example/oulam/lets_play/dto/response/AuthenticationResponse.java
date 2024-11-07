@@ -1,4 +1,4 @@
-package com.example.oulam.lets_play.controller;
+package com.example.oulam.lets_play.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,5 +1,6 @@
-package com.example.oulam.lets_play.security;
+package com.example.oulam.lets_play.config;
 
+import com.example.oulam.lets_play.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,7 @@ public class SecurityConfiguration {
                         // Public endpoints
                         .requestMatchers("/api/auth/register/**").permitAll()
                         .requestMatchers("/api/auth/login/**").permitAll()
+                        .requestMatchers("/api/products").permitAll()
                         // Private endpoints
                         .anyRequest().authenticated()
                 )

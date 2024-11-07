@@ -1,10 +1,12 @@
 package com.example.oulam.lets_play.controller;
 
-import com.example.oulam.lets_play.dto.LoginRequest;
-import com.example.oulam.lets_play.dto.RegisterRequest;
+import com.example.oulam.lets_play.dto.request.LoginRequest;
+import com.example.oulam.lets_play.dto.request.RegisterRequest;
+import com.example.oulam.lets_play.dto.response.AuthenticationResponse;
 import com.example.oulam.lets_play.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
