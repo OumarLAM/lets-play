@@ -16,7 +16,7 @@ COPY src src
 RUN ./mvnw package -DskipTests
 
 # Expose the port the app runs on
-EXPOSE 8080
+EXPOSE 8443
 
 # Run the application
 CMD ["java", "-jar", "target/lets-play-0.0.1-SNAPSHOT.jar"]

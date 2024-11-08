@@ -9,7 +9,7 @@ public class LetsPlayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LetsPlayApplication.class, args);
 		System.out.println("Let's play app is running succesfully...");
-		System.out.println("You can access the application at http://localhost:8443");
+		System.out.println("You can access the application at https://localhost:8443");
 	}
 
 }

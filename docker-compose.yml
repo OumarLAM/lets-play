@@ -5,7 +5,7 @@ services:
   app:
     build: .
     ports:
-      - "8080:8080"
+      - "8443:8443"
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/lets-play-db
     depends_on:

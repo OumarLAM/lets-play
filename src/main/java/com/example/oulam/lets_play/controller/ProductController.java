@@ -1,6 +1,7 @@
 package com.example.oulam.lets_play.controller;
 
 import com.example.oulam.lets_play.model.Product;
+import com.example.oulam.lets_play.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
