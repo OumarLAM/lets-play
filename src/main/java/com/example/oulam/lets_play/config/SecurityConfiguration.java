@@ -33,7 +33,12 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/auth/register/**").permitAll()
                         .requestMatchers("/api/auth/login/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
-                        // Private endpoints
+                        // User CRUD endpoints
+                        .requestMatchers(HttpMethod.GET, "/api/users/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/{id}").access("@userSecurity.canUpdateUser(authentication, #id)")
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").access("@userSecurity.canDeleteUser(authentication, #id)")
+                        // Private product endpoints
                         .requestMatchers(HttpMethod.POST, "/api/products/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/products/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/products/**").authenticated()
@@ -41,7 +46,7 @@ public class SecurityConfiguration {
                 )
                 .requiresChannel((requiresChannel) ->
                         requiresChannel
-                                .requestMatchers("/api/auth/**", "/api/products/**").requiresSecure()
+                                .requestMatchers("/api/auth/**", "/api/users/**", "/api/products/**").requiresSecure()
                                 .anyRequest().requiresSecure()
                 )
                 .authenticationManager(authenticationManager)
