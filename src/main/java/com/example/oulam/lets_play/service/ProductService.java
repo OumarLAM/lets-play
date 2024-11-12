@@ -1,5 +1,6 @@
 package com.example.oulam.lets_play.service;
 
+import com.example.oulam.lets_play.exception.ValidationException;
 import com.example.oulam.lets_play.model.Product;
 import com.example.oulam.lets_play.repository.ProductRepository;
 import jakarta.validation.Valid;
@@ -23,6 +24,10 @@ public class ProductService {
 
     @Transactional
     public Product createProduct(@Valid Product product) {
+        if (productRepository.findByName(product.getName()).isPresent()) {
+            throw new ValidationException("name", "Product name already exists");
+        }
+
         return productRepository.save(product);
     }
 
@@ -30,6 +35,11 @@ public class ProductService {
     public Optional<Product> updateProduct(String id, Product updatedProduct) {
         return productRepository.findById(id)
                 .map(existingProduct -> {
+                    if (productRepository.findByName(updatedProduct.getName())
+                            .filter(p -> !p.getId().equals(id))
+                            .isPresent()) {
+                        throw new ValidationException("name", "Product name already exists");
+                    }
                     existingProduct.setName(updatedProduct.getName());
                     existingProduct.setDescription(updatedProduct.getDescription());
                     existingProduct.setPrice(updatedProduct.getPrice());

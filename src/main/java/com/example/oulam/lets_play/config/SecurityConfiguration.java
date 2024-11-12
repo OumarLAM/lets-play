@@ -4,6 +4,7 @@ import com.example.oulam.lets_play.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -31,19 +32,18 @@ public class SecurityConfiguration {
                         // Public endpoints
                         .requestMatchers("/api/auth/register/**").permitAll()
                         .requestMatchers("/api/auth/login/**").permitAll()
-                        .requestMatchers("/api/products/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                         // Private endpoints
+                        .requestMatchers(HttpMethod.POST, "/api/products/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/products/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .requiresChannel((requiresChannel) ->
                         requiresChannel
+                                .requestMatchers("/api/auth/**", "/api/products/**").requiresSecure()
                                 .anyRequest().requiresSecure()
                 )
-//                .portMapper((portMapper) ->
-//                        portMapper
-//                                .http(8080).mapsTo(8443)
-//                                .http(80).mapsTo(443)
-//                )
                 .authenticationManager(authenticationManager)
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
