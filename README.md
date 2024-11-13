@@ -44,7 +44,7 @@ A robust REST API built with Spring Boot and MongoDB that implements user authen
 
 ### Users
 - `GET /api/users` - List all users (Admin only)
-- `GET /api/users/{id}` - Get user details (Authenticated)
+- `GET /api/users/{id}` - Get user details (Authenticated) (to be implemented)
 - `PUT /api/users/{id}` - Update user (Authenticated)
 - `DELETE /api/users/{id}` - Delete user (Admin only)
 

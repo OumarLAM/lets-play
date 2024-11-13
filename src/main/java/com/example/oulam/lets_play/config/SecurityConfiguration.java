@@ -1,6 +1,7 @@
 package com.example.oulam.lets_play.config;
 
 import com.example.oulam.lets_play.security.JwtAuthenticationFilter;
+import com.example.oulam.lets_play.security.UserSecurity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
+    private final UserSecurity userSecurity;
     private AuthenticationProvider authenticationProvider;
 
     @Bean
@@ -29,16 +31,17 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests( auth -> auth
-                        // Public endpoints
+                        // Authentication endpoints
                         .requestMatchers("/api/auth/register/**").permitAll()
                         .requestMatchers("/api/auth/login/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                         // User CRUD endpoints
                         .requestMatchers(HttpMethod.GET, "/api/users/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/users/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/users/{id}").access("@userSecurity.canUpdateUser(authentication, #id)")
-                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").access("@userSecurity.canDeleteUser(authentication, #id)")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/{id}").access(userSecurity.canUpdateUser())
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").access(userSecurity.canDeleteUser())
                         // Private product endpoints
+                        .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/{id}").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/products/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/products/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/products/**").authenticated()

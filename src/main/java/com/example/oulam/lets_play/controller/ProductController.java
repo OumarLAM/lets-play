@@ -25,6 +25,12 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable String id) {
+        Optional<Product> product = productService.getProductById(id);
+        return product.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
 //    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<Object> createProduct(@Valid @RequestBody Product product) {

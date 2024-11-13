@@ -22,6 +22,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Optional<Product> getProductById(String id) {
+        return productRepository.findById(id);
+    }
+
     @Transactional
     public Product createProduct(@Valid Product product) {
         if (productRepository.findByName(product.getName()).isPresent()) {
